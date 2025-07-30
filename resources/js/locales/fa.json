@@ -8,5 +8,23 @@
   "customers": "مشتریان",
   "inventory": "موجودی",
   "accounting": "حسابداری",
-  "settings": "تنظیمات"
+  "settings": "تنظیمات",
+  "navigation": {
+    "home": "خانه",
+    "profile": "پروفایل",
+    "logout": "خروج",
+    "menu": "منو",
+    "notifications": "اعلان‌ها"
+  },
+  "common": {
+    "save": "ذخیره",
+    "cancel": "لغو",
+    "delete": "حذف",
+    "edit": "ویرایش",
+    "add": "افزودن",
+    "search": "جستجو",
+    "loading": "در حال بارگذاری...",
+    "error": "خطا",
+    "success": "موفقیت"
+  }
 }

@@ -8,5 +8,23 @@
   "customers": "Customers",
   "inventory": "Inventory",
   "accounting": "Accounting",
-  "settings": "Settings"
+  "settings": "Settings",
+  "navigation": {
+    "home": "Home",
+    "profile": "Profile",
+    "logout": "Logout",
+    "menu": "Menu",
+    "notifications": "Notifications"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  }
 }

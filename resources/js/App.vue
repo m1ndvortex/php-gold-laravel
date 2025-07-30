@@ -1,15 +1,9 @@
 <template>
-  <div id="app" :dir="$i18n.locale === 'fa' ? 'rtl' : 'ltr'" :class="$i18n.locale === 'fa' ? 'font-vazir' : 'font-inter'">
+  <AppLayout>
     <router-view />
-  </div>
+  </AppLayout>
 </template>
 
-<script>
-export default {
-  name: 'App'
-}
+<script setup lang="ts">
+import AppLayout from '@/components/layout/AppLayout.vue'
 </script>
-
-<style>
-/* Global styles are handled in app.css */
-</style>
