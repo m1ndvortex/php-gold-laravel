@@ -1,0 +1,283 @@
+1. Project Overview & Core Architecture
+Vision:
+Build a secure, scalable, and RTL-compliant SaaS platform for Persian-speaking jewelers (طلافروش‌ها), optimized for real-world jewelry workflows such as invoicing, inventory, accounting, and CRM — all within a multi-tenant environment that guarantees data isolation, customizability, and performance.
+
+Key Goals:
+
+100% Persian (Farsi) UI with perfect RTL layout; English UI optional toggle in settings.
+
+Isolated tenant environments for data privacy and security.
+
+Modular architecture with pluggable, reusable Laravel service providers.
+
+Clean developer experience with fully Dockerized Laravel + Vue/React + MySQL + Redis stack.
+
+User Roles:
+
+Super Admin: Platform-wide operations, tenant management, billing. No access to tenant business data.
+
+Tenant Admin (Jeweler): Manages own workspace, team, settings, and reports.
+
+Tenant Employees: Role-based permissions (Cashier, Accountant, etc.), supporting custom roles defined by Tenant Admin.
+
+New Feature: Session Device Tracker — View active sessions and force logout devices remotely.
+
+2. Technology Stack & Infrastructure
+Backend: PHP Laravel 10+ with built-in support for multi-tenancy (e.g., tenancy for Laravel or spatie/laravel-multitenancy).
+
+Frontend: Vue.js or React.js + Vite + Tailwind CSS (TypeScript) — Fully RTL-compliant with language toggle (Farsi primary).
+
+Database: MySQL with Eloquent ORM supporting multi-tenant schema separation or database per tenant.
+
+Caching & Queues: Redis for sessions, rate-limiting, real-time cache, and job queues.
+
+CI/CD: GitHub Actions or GitLab CI with Dockerized Laravel, DB, Redis, and Nginx services.
+
+Dependencies: Self-hosted fonts and libraries only, no external CDNs, for privacy and performance.
+
+Docker Setup:
+
+Laravel backend with hot reload
+
+Frontend Vite server with volume mount
+
+MySQL with volume persistence
+
+Redis container for caching and async processing
+
+Nginx reverse proxy for production with SSL termination
+
+3. Dashboard (داشبورد اصلی)
+Your control panel for insights and actions.
+
+Widgets:
+
+KPIs: Today’s Sales, Profit, New Customers, Gold Sold (MTD)
+
+Alerts: Overdue Invoices, Cheques Due, Low Inventory
+
+Sales Trend: Interactive bar/line chart
+
+Quick Actions: New Invoice, Add Product, Add Customer
+
+New Features:
+
+Drag & Drop Layout: Save personalized dashboard layouts per user.
+
+Number & Date Formatting: Persian and English digits supported dynamically.
+
+Real-Time Sync: Live updates via Laravel Echo and WebSockets (Redis broadcasting).
+
+4. Invoicing (فاکتور)
+Comprehensive invoice generator with gold pricing logic.
+
+Core Logic:
+Final Price = Gold Weight × (Daily Gold Price + Manufacturing Fee + Jeweler’s Profit + VAT)
+
+Key Features:
+
+Multi-type: Sale, Purchase, Trade
+
+Barcode scanning support
+
+Split payments: Cash, Card, Cheque, Credit
+
+PDF Invoice Generator with customizable branding
+
+New Features:
+
+Recurring invoices scheduler
+
+Multi-currency support
+
+Auto-populate gold price daily from external API
+
+Custom notes, attachments, and internal tags per invoice
+
+5. Customer Management (مشتریان)
+Powerful CRM and ledger in one.
+
+Features:
+
+Full profile (contacts, tags, tax ID)
+
+Gold & currency ledger with balance history
+
+CSV/Excel import & export
+
+Opening balances and account status
+
+New Features:
+
+Birthday/Occasion reminders
+
+WhatsApp/SMS integration for follow-ups
+
+Customer Groups (Wholesalers, VIPs)
+
+Customer credit limits and automatic invoice blocking
+
+6. Inventory (انبار)
+Multi-type product tracking with precision.
+
+Categories:
+
+Raw Gold
+
+Finished Jewelry
+
+Coins
+
+Stones
+
+Features:
+
+Barcode/QR label generator
+
+Manual stock adjustments (lost, damaged)
+
+Inventory aging & slow-moving reports
+
+Real-time integration with invoicing
+
+New Features:
+
+Bill of Materials (BOM) — multi-component item recipes
+
+Minimum quantity alerts
+
+Physical stock reconciliation module
+
+Wastage tracking in production
+
+7. Accounting (حسابداری) – Expanded with 10 New Features
+Core System:
+
+Double-entry bookkeeping with standard Chart of Accounts
+
+Manual Journal Entries
+
+Multi-ledger per entity
+
+Cheque lifecycle management
+
+Bank reconciliation with CSV import
+
+Financial Reports:
+
+Trial Balance
+
+Profit & Loss
+
+Balance Sheet
+
+General Ledger with advanced filtering
+
+Exportable to PDF/Excel
+
+New Professional Features:
+
+Automated Recurring Journal Entries (e.g., rent, depreciation)
+
+Fixed Asset Management module
+
+Cost Center Tagging (e.g., Online vs In-Store)
+
+Drill-down reporting to transaction level
+
+Audit adjustments workflow for fiscal closing
+
+Tax filing report generator for local authorities
+
+Transaction locking by date
+
+Multi-currency ledger with FX gain/loss tracking
+
+Payment scheduling calendar visualization
+
+Custom accounting entry templates
+
+8. Settings (تنظیمات)
+Centralized configuration hub.
+
+Modules:
+
+Business Identity (name, logo, headers, footers)
+
+Financial settings (default gold price, VAT, profit %)
+
+User & Role Management
+
+One-click Backup & Restore
+
+Audit Logs (who, what, when, where)
+
+Data Import/Export (inventory, customers)
+
+New Features:
+
+Email & SMS templates
+
+Notification triggers (alerts, reminders)
+
+Full theme customization per tenant
+
+9. Security (امنیت) & Compliance
+Baseline Security:
+
+TLS 1.3 + AES encryption enforced globally
+
+API role validation with Laravel Policies and Gates
+
+Strict tenant isolation via schema or DB separation
+
+Enforced strong password policies and rate limiting
+
+Audit logs for all sensitive actions
+
+Advanced Features:
+
+Middleware Layers:
+
+Authentication & Authorization (Laravel Sanctum/Fortify + custom middleware)
+
+Tenant context resolver middleware (subdomain or header based)
+
+Rate limiting middleware with Redis backend
+
+Two-Factor Authentication enforcement middleware
+
+IP Whitelisting and Geo-fencing middleware
+
+Session & Device management middleware to track and control active sessions
+
+Idle timeout auto-logout middleware
+
+CSRF protection middleware (Laravel default)
+
+Input validation & sanitization middleware
+
+Login anomaly detection (IP, geo location) with alerts
+
+GDPR-style data export and deletion compliance features
+
+Security audit logs with export functionality
+
+Secure cookie policies: HttpOnly, SameSite, Secure flags
+
+Automatic logout on idle session timeout
+
+Regular vulnerability scanning integrated into CI/CD
+
+10. Platform-Wide Bonus Features
+Feature	Description
+PWA Offline Mode	Invoices and inventory usable offline
+Subscription Plans	Monthly/annual with feature limits
+Webhook Support	Zapier-style external triggers
+API Access for Tenants	Developer API key & documentation
+Help & Support Center	Knowledge base, tickets, onboarding
+Tenant Setup Wizard	Smart onboarding flow after sign-up
+Multi-language Support	Persian primary; English toggle; extendable
+Notification Center	Unified logs and toast alerts
+Dark/Light Mode Support	User & tenant theming
+Email & SMS Automation	For invoices, birthdays, and follow-ups

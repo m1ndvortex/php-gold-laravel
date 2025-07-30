@@ -1,0 +1,12 @@
+{
+  "welcome": "Welcome to Jewelry Management Platform",
+  "platform_description": "Comprehensive business management system for Persian-speaking jewelers",
+  "switch_language": "Switch Language",
+  "current_language": "Current Language",
+  "dashboard": "Dashboard",
+  "invoices": "Invoices",
+  "customers": "Customers",
+  "inventory": "Inventory",
+  "accounting": "Accounting",
+  "settings": "Settings"
+}
