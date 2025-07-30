@@ -42,7 +42,7 @@ class Kernel extends HttpKernel
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\UpdateSessionActivity::class,
+            \App\Http\Middleware\SessionTimeout::class,
         ],
     ];
 
@@ -68,5 +68,7 @@ class Kernel extends HttpKernel
         'tenant' => \App\Http\Middleware\TenantResolver::class,
         'permission' => \App\Http\Middleware\CheckPermission::class,
         'role' => \App\Http\Middleware\CheckRole::class,
+        'session.timeout' => \App\Http\Middleware\SessionTimeout::class,
+        'login.anomaly' => \App\Http\Middleware\LoginAnomalyDetection::class,
     ];
 }

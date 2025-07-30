@@ -9,15 +9,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\PersonalAccessToken;
-use Jenssegers\Agent\Agent;
 
 class AuthService
 {
-    protected Agent $agent;
+    protected SessionDeviceService $sessionDeviceService;
 
-    public function __construct()
+    public function __construct(SessionDeviceService $sessionDeviceService)
     {
-        $this->agent = new Agent(null);
+        $this->sessionDeviceService = $sessionDeviceService;
     }
 
     /**
@@ -73,8 +72,11 @@ class AuthService
         // Update last login information
         $user->updateLastLogin($request->ip());
 
-        // Create session record
-        $session = $this->createUserSession($user, $request);
+        // Create session record using SessionDeviceService
+        $sessionId = session()->getId() ?: Str::random(40);
+        session()->setId($sessionId);
+        
+        $session = $this->sessionDeviceService->createSession($user, $request, $sessionId);
 
         // Create API token with explicit expiration
         $expiresAt = now()->addDays(30);
@@ -127,87 +129,29 @@ class AuthService
         // Delete all tokens
         $user->tokens()->delete();
 
-        // Logout all sessions
-        $user->sessions()->active()->each(function ($session) {
-            $session->logout();
-        });
+        // Logout all sessions using SessionDeviceService
+        $this->sessionDeviceService->logoutAllSessions($user);
     }
 
     /**
      * Logout user from specific session.
      */
-    public function logoutFromSession(User $user, int $sessionId): void
+    public function logoutFromSession(User $user, string $sessionId): void
     {
-        $session = $user->sessions()->where('id', $sessionId)->first();
+        // Find session by session_id
+        $session = $user->sessions()->where('session_id', $sessionId)->first();
         
         if ($session) {
             // Find and delete associated token
-            $tokenName = 'auth-token-' . $sessionId;
+            $tokenName = 'auth-token-' . $session->id;
             $user->tokens()->where('name', $tokenName)->delete();
             
-            // Logout session
-            $session->logout();
+            // Logout session using SessionDeviceService
+            $this->sessionDeviceService->logoutSession($user, $sessionId);
         }
     }
 
-    /**
-     * Create user session record.
-     */
-    protected function createUserSession(User $user, Request $request): UserSession
-    {
-        // Mark all other sessions as not current
-        $user->sessions()->update(['is_current' => false]);
 
-        $this->agent->setUserAgent($request->userAgent());
-
-        return UserSession::create([
-            'user_id' => $user->id,
-            'session_id' => Str::random(40),
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'device_type' => $this->getDeviceType(),
-            'device_name' => $this->agent->device(),
-            'browser' => $this->agent->browser(),
-            'platform' => $this->agent->platform(),
-            'location' => $this->getLocationFromIp($request->ip()),
-            'is_current' => true,
-            'last_activity' => now(),
-        ]);
-    }
-
-    /**
-     * Get device type from user agent.
-     */
-    protected function getDeviceType(): string
-    {
-        if ($this->agent->isMobile()) {
-            return 'mobile';
-        } elseif ($this->agent->isTablet()) {
-            return 'tablet';
-        } elseif ($this->agent->isDesktop()) {
-            return 'desktop';
-        }
-
-        return 'unknown';
-    }
-
-    /**
-     * Get location information from IP address.
-     */
-    protected function getLocationFromIp(string $ip): ?array
-    {
-        // In a real implementation, you would use a service like MaxMind GeoIP
-        // For now, return null or mock data
-        if ($ip === '127.0.0.1' || $ip === '::1') {
-            return [
-                'city' => 'Local',
-                'country' => 'Local',
-                'country_code' => 'LC',
-            ];
-        }
-
-        return null;
-    }
 
     /**
      * Generate temporary token for 2FA.
@@ -290,10 +234,7 @@ class AuthService
      */
     public function getActiveSessions(User $user): \Illuminate\Database\Eloquent\Collection
     {
-        return $user->sessions()
-            ->active()
-            ->orderBy('last_activity', 'desc')
-            ->get();
+        return $this->sessionDeviceService->getUserActiveSessions($user);
     }
 
     /**
@@ -301,20 +242,9 @@ class AuthService
      */
     public function updateSessionActivity(Request $request): void
     {
-        $user = $request->user();
-        $token = $request->user()->currentAccessToken();
-
-        if ($token && $user) {
-            $sessionId = $this->extractSessionIdFromToken($token);
-            if ($sessionId) {
-                $session = UserSession::where('user_id', $user->id)
-                    ->where('id', $sessionId)
-                    ->first();
-                
-                if ($session) {
-                    $session->updateActivity();
-                }
-            }
+        $sessionId = session()->getId();
+        if ($sessionId) {
+            $this->sessionDeviceService->updateSessionActivity($sessionId);
         }
     }
 }

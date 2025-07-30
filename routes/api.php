@@ -18,8 +18,8 @@ use App\Http\Controllers\Api\TwoFactorController;
 
 // Public authentication routes
 Route::prefix('auth')->group(function () {
-    Route::post('login', [AuthController::class, 'login']);
-    Route::post('verify-2fa', [AuthController::class, 'verifyTwoFactor']);
+    Route::post('login', [AuthController::class, 'login'])->middleware('login.anomaly');
+    Route::post('verify-2fa', [AuthController::class, 'verifyTwoFactor'])->middleware('login.anomaly');
 });
 
 // Protected routes with tenant context
@@ -31,6 +31,16 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout']);
         Route::post('logout-all', [AuthController::class, 'logoutAll']);
         Route::post('logout-session', [AuthController::class, 'logoutSession']);
+    });
+
+    // Session management routes
+    Route::prefix('sessions')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Api\SessionController::class, 'index']);
+        Route::delete('/{sessionId}', [\App\Http\Controllers\Api\SessionController::class, 'destroy']);
+        Route::post('/logout-others', [\App\Http\Controllers\Api\SessionController::class, 'destroyOthers']);
+        Route::post('/logout-all', [\App\Http\Controllers\Api\SessionController::class, 'destroyAll']);
+        Route::get('/timeout', [\App\Http\Controllers\Api\SessionController::class, 'timeout']);
+        Route::get('/anomalies', [\App\Http\Controllers\Api\SessionController::class, 'anomalies']);
     });
 
     // Two-factor authentication routes

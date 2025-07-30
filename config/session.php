@@ -37,6 +37,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Session Timeout
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the session timeout in minutes for user sessions.
+    | This is used by the SessionTimeout middleware to automatically logout
+    | users after a period of inactivity.
+    |
+    */
+
+    'timeout' => env('SESSION_TIMEOUT', 120),
+
+    /*
+    |--------------------------------------------------------------------------
     | Session Encryption
     |--------------------------------------------------------------------------
     |
