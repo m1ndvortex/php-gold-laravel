@@ -1,5 +1,18 @@
 # Requirements Document
 
+## 🐳 DOCKER INFRASTRUCTURE NOTICE
+
+**⚠️ CRITICAL: This project uses Docker for ALL services. Do NOT install MySQL, Redis, or other services locally!**
+
+**Active Docker Containers:**
+- `jewelry_mysql` - MySQL Database (port 3306)
+- `jewelry_redis` - Redis Cache/Sessions/Queues (port 6379)
+- `jewelry_app` - Laravel Application (PHP-FPM)
+- `jewelry_vite` - Vite Development Server (port 5173)
+- `jewelry_nginx` - Nginx Web Server (ports 80/443)
+
+**Before starting any task, verify containers are running:** `docker ps`
+
 ## Introduction
 
 This document outlines the requirements for a secure, scalable, and RTL-compliant SaaS platform designed specifically for Persian-speaking jewelers (طلافروش‌ها). The platform will provide comprehensive business management tools including invoicing, inventory management, accounting, and CRM functionality within a multi-tenant environment that ensures data isolation, customizability, and performance optimization.
@@ -144,3 +157,30 @@ This document outlines the requirements for a secure, scalable, and RTL-complian
 4. WHEN caching data THEN the system SHALL include Redis container for sessions, queues, and real-time features
 5. WHEN serving in production THEN the system SHALL include Nginx reverse proxy with SSL termination
 6. WHEN testing with real data THEN the system SHALL provide database seeding and migration capabilities within Docker environment
+
+#### ⚠️ CRITICAL INFRASTRUCTURE NOTE FOR ALL DEVELOPERS:
+
+**THIS PROJECT USES DOCKER FOR ALL SERVICES - DO NOT INSTALL LOCALLY!**
+
+The following services are running in Docker containers and should NEVER be installed locally:
+- **MySQL Database**: Container `jewelry_mysql` on port 3306
+- **Redis Cache/Sessions/Queues**: Container `jewelry_redis` on port 6379  
+- **Laravel Application**: Container `jewelry_app` (PHP-FPM)
+- **Vite Development Server**: Container `jewelry_vite` on port 5173
+- **Nginx Web Server**: Container `jewelry_nginx` on ports 80/443
+
+**Docker Commands to Remember:**
+- Start all services: `docker-compose up -d`
+- Laravel commands: `docker exec jewelry_app php artisan [command]`
+- Database access: `docker exec jewelry_mysql mysql -u jewelry_user -p`
+- Redis access: `docker exec jewelry_redis redis-cli`
+- View logs: `docker logs [container_name]`
+- Restart service: `docker restart [container_name]`
+
+**Configuration Files:**
+- Database connection: Uses `mysql` hostname (not localhost)
+- Redis connection: Uses `redis` hostname (not localhost)
+- All environment variables are in `.env` file
+- Docker configuration in `docker-compose.yml`
+
+**ALWAYS verify Docker containers are running with `docker ps` before starting any task!**
