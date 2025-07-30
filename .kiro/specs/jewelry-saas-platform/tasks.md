@@ -62,13 +62,25 @@
 
 
 
+
   - Initialize Vue.js application with Vite and TypeScript
   - Configure Tailwind CSS with RTL plugin and Persian font support
   - Implement Vue i18n for Persian/English language switching
   - Create base layout components with RTL-aware navigation
   - _Requirements: 2.1, 2.2, 2.3_
 
-- [ ] 6. Build core business models and relationships
+- [x] 6. Build core business models and relationships
+
+
+
+
+
+
+
+
+
+
+
   - Create Customer model with contact information, groups, and credit limits
   - Implement Product model with categories, BOM support, and stock tracking
   - Build Invoice model with gold pricing calculation logic
