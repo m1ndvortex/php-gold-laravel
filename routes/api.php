@@ -51,6 +51,28 @@ Route::middleware(['auth:sanctum', 'tenant'])->group(function () {
         Route::post('regenerate-codes', [TwoFactorController::class, 'regenerateRecoveryCodes']);
     });
 
+    // Invoice management routes
+    Route::prefix('invoices')->group(function () {
+        Route::get('/', [\App\Http\Controllers\Api\InvoiceController::class, 'index']);
+        Route::post('/', [\App\Http\Controllers\Api\InvoiceController::class, 'store']);
+        Route::get('/statistics', [\App\Http\Controllers\Api\InvoiceController::class, 'statistics']);
+        Route::get('/{invoice}', [\App\Http\Controllers\Api\InvoiceController::class, 'show']);
+        Route::put('/{invoice}', [\App\Http\Controllers\Api\InvoiceController::class, 'update']);
+        Route::delete('/{invoice}', [\App\Http\Controllers\Api\InvoiceController::class, 'destroy']);
+        
+        // Invoice items management
+        Route::post('/{invoice}/items', [\App\Http\Controllers\Api\InvoiceController::class, 'addItem']);
+        Route::put('/{invoice}/items/{item}', [\App\Http\Controllers\Api\InvoiceController::class, 'updateItem']);
+        Route::delete('/{invoice}/items/{item}', [\App\Http\Controllers\Api\InvoiceController::class, 'removeItem']);
+        
+        // Invoice actions
+        Route::post('/{invoice}/payments', [\App\Http\Controllers\Api\InvoiceController::class, 'processPayment']);
+        Route::patch('/{invoice}/status', [\App\Http\Controllers\Api\InvoiceController::class, 'updateStatus']);
+        Route::post('/{invoice}/cancel', [\App\Http\Controllers\Api\InvoiceController::class, 'cancel']);
+        Route::post('/{invoice}/duplicate', [\App\Http\Controllers\Api\InvoiceController::class, 'duplicate']);
+        Route::get('/{invoice}/pdf', [\App\Http\Controllers\Api\InvoiceController::class, 'generatePdf']);
+    });
+
     // Legacy user route for compatibility
     Route::get('/user', function (Request $request) {
         return $request->user()->load('role.permissions');
