@@ -21,6 +21,7 @@ class Customer extends Model
         'customer_group_id',
         'credit_limit',
         'current_balance',
+        'gold_balance',
         'birth_date',
         'notes',
         'tags',
@@ -36,6 +37,7 @@ class Customer extends Model
     protected $casts = [
         'credit_limit' => 'decimal:2',
         'current_balance' => 'decimal:2',
+        'gold_balance' => 'decimal:3',
         'birth_date' => 'date',
         'is_active' => 'boolean',
         'last_transaction_at' => 'datetime',

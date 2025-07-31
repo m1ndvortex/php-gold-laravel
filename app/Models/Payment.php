@@ -22,6 +22,8 @@ class Payment extends Model
         'reference_number',
         'bank_name',
         'cheque_date',
+        'cheque_due_date',
+        'cheque_number',
         'payment_details',
         'processed_by',
         'processed_at',
@@ -31,6 +33,7 @@ class Payment extends Model
         'amount' => 'decimal:2',
         'payment_date' => 'date',
         'cheque_date' => 'date',
+        'cheque_due_date' => 'date',
         'payment_details' => 'array',
         'processed_at' => 'datetime',
     ];

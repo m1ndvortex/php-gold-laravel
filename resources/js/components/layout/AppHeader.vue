@@ -40,11 +40,8 @@
         <!-- Language Switcher -->
         <LanguageSwitcher />
         
-        <!-- Notifications button -->
-        <button type="button" class="-m-2.5 p-2.5 text-gray-400 hover:text-gray-500">
-          <span class="sr-only">{{ t('navigation.notifications') }}</span>
-          <BellIcon class="h-6 w-6" aria-hidden="true" />
-        </button>
+        <!-- Notification Center -->
+        <NotificationCenter />
 
         <!-- Separator -->
         <div class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-200" aria-hidden="true" />
@@ -108,6 +105,7 @@ import {
   MagnifyingGlassIcon,
 } from '@heroicons/vue/24/outline'
 import LanguageSwitcher from '../ui/LanguageSwitcher.vue'
+import NotificationCenter from '../notifications/NotificationCenter.vue'
 
 const { t, isRTL } = useI18n()
 

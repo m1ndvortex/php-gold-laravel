@@ -16,6 +16,21 @@
     "menu": "Menu",
     "notifications": "Notifications"
   },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications",
+    "markRead": "Mark as read",
+    "markAllRead": "Mark all as read",
+    "clearAll": "Clear all",
+    "testConnection": "Test connection",
+    "connected": "Connected",
+    "connecting": "Connecting",
+    "connectionError": "Connection error",
+    "disconnected": "Disconnected",
+    "justNow": "Just now",
+    "minutesAgo": "{count} minutes ago",
+    "hoursAgo": "{count} hours ago"
+  },
   "common": {
     "save": "Save",
     "cancel": "Cancel",
@@ -26,5 +41,28 @@
     "loading": "Loading...",
     "error": "Error",
     "success": "Success"
-  }
+  },
+  "realtime_on": "Real-time updates on",
+  "realtime_off": "Real-time updates off",
+  "last_update": "Last update",
+  "today": "Today",
+  "this_week": "This week",
+  "this_month": "This month",
+  "this_year": "This year",
+  "refresh": "Refresh",
+  "loading_dashboard": "Loading dashboard...",
+  "error_loading_dashboard": "Error loading dashboard",
+  "error_loading_data": "Error loading data",
+  "try_again": "Try again",
+  "dashboard_description": "Overview of your business performance",
+  "total_sales": "Total Sales",
+  "quick_actions": "Quick Actions",
+  "create_invoice": "Create Invoice",
+  "create_new_invoice": "Create new invoice",
+  "add_customer": "Add Customer",
+  "add_new_customer": "Add new customer",
+  "view_inventory": "View Inventory",
+  "manage_inventory": "Manage inventory",
+  "view_reports": "View Reports",
+  "view_financial_reports": "View financial reports"
 }

@@ -14,10 +14,15 @@ class TenantService
     /**
      * Set the current tenant
      */
-    public function setCurrentTenant(Tenant $tenant): void
+    public function setCurrentTenant(?Tenant $tenant): void
     {
         $this->currentTenant = $tenant;
-        app()->instance('tenant', $tenant);
+        
+        if ($tenant) {
+            app()->instance('tenant', $tenant);
+        } else {
+            app()->forgetInstance('tenant');
+        }
     }
 
     /**

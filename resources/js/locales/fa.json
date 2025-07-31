@@ -16,6 +16,21 @@
     "menu": "منو",
     "notifications": "اعلان‌ها"
   },
+  "notifications": {
+    "title": "اعلان‌ها",
+    "empty": "اعلانی وجود ندارد",
+    "markRead": "خوانده شده",
+    "markAllRead": "همه خوانده شده",
+    "clearAll": "پاک کردن همه",
+    "testConnection": "تست اتصال",
+    "connected": "متصل",
+    "connecting": "در حال اتصال",
+    "connectionError": "خطا در اتصال",
+    "disconnected": "قطع شده",
+    "justNow": "همین الان",
+    "minutesAgo": "{count} دقیقه پیش",
+    "hoursAgo": "{count} ساعت پیش"
+  },
   "common": {
     "save": "ذخیره",
     "cancel": "لغو",
@@ -26,5 +41,28 @@
     "loading": "در حال بارگذاری...",
     "error": "خطا",
     "success": "موفقیت"
-  }
+  },
+  "realtime_on": "به‌روزرسانی زنده فعال",
+  "realtime_off": "به‌روزرسانی زنده غیرفعال",
+  "last_update": "آخرین به‌روزرسانی",
+  "today": "امروز",
+  "this_week": "این هفته",
+  "this_month": "این ماه",
+  "this_year": "امسال",
+  "refresh": "تازه‌سازی",
+  "loading_dashboard": "در حال بارگذاری داشبورد...",
+  "error_loading_dashboard": "خطا در بارگذاری داشبورد",
+  "error_loading_data": "خطا در بارگذاری اطلاعات",
+  "try_again": "تلاش مجدد",
+  "dashboard_description": "نمای کلی از عملکرد کسب و کار شما",
+  "total_sales": "فروش کل",
+  "quick_actions": "عملیات سریع",
+  "create_invoice": "ایجاد فاکتور",
+  "create_new_invoice": "ایجاد فاکتور جدید",
+  "add_customer": "افزودن مشتری",
+  "add_new_customer": "افزودن مشتری جدید",
+  "view_inventory": "مشاهده موجودی",
+  "manage_inventory": "مدیریت موجودی",
+  "view_reports": "مشاهده گزارش‌ها",
+  "view_financial_reports": "مشاهده گزارش‌های مالی"
 }
