@@ -25,7 +25,7 @@
     "dependencies": {
         "@headlessui/vue": "^1.7.16",
         "@heroicons/vue": "^2.0.18",
-        "axios": "^1.6.0",
+        "axios": "^1.13.5",
         "laravel-echo": "^1.19.0",
         "pinia": "^2.1.7",
         "pusher-js": "^8.4.0",
